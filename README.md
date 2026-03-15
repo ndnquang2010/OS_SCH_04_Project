@@ -8,6 +8,7 @@ Group: OS Group 1
 - Hà Chấn Hào
 - Phan Nhật Hào
 - Nguyễn Đoàn Nhật Quang
+- Nghiêm Đình Đạt
 
 ## Project Description
 This repository stores source code, documents and development progress for the Operating System course project.
