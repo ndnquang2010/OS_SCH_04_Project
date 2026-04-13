@@ -4,8 +4,8 @@
 #include <iomanip>
 
 // Hàm đọc dữ liệu từ file CSV
-vector<Process> readProcessesFromCSV(const string& filename) {
-    vector<Process> processes;
+vector<ProcessPrio> readProcessesFromCSV(const string& filename) {
+    vector<ProcessPrio> processes;
     ifstream file(filename);
 
     if (!file.is_open()) {
@@ -25,7 +25,7 @@ vector<Process> readProcessesFromCSV(const string& filename) {
         getline(ss, burstStr, ',');
         getline(ss, priorityStr, ',');
 
-        Process p;
+        ProcessPrio p;
         p.name = name;
         p.arrivalTime = stoi(arrivalStr);
         p.burstTime = stoi(burstStr);
@@ -39,7 +39,7 @@ vector<Process> readProcessesFromCSV(const string& filename) {
 }
 
 // Priority Non-Preemptive
-void priorityScheduling(vector<Process>& processes) {
+void priorityScheduling(vector<ProcessPrio>& processes) {
     int n = processes.size();
     int currentTime = 0;
     int completedCount = 0;
@@ -78,7 +78,7 @@ void priorityScheduling(vector<Process>& processes) {
 }
 
 // In kết quả ra màn hình
-void printResults(const vector<Process>& processes) {
+void printResults(const vector<ProcessPrio>& processes) {
     float totalWaiting = 0, totalTurnaround = 0;
     int n = processes.size();
 
@@ -110,19 +110,3 @@ void printResults(const vector<Process>& processes) {
     cout << "\nAverage Waiting Time: " << totalWaiting / n << endl;
     cout << "Average Turnaround Time: " << totalTurnaround / n << endl;
 }
-/* o day test code
-int main() {
-    string filename = "processes.csv";
-
-    vector<Process> processes = readProcessesFromCSV(filename);
-
-    if (processes.empty()) {
-        cout << "No process data found!" << endl;
-        return 1;
-    }
-
-    priorityScheduling(processes);
-    printResults(processes);
-
-    return 0;
-} */

@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-struct Process {
+struct ProcessPrio {
     string name;
     int arrivalTime;
     int burstTime;
@@ -18,13 +18,13 @@ struct Process {
     bool completed = false;
 };
 
-// Đọc dữ liệu từ file CSV
-vector<Process> readProcessesFromCSV(const string& filename);
+// Đọc file CSV
+vector<ProcessPrio> readProcessesFromCSV(const string& filename);
 
 // Priority Non-Preemptive
-void priorityScheduling(vector<Process>& processes);
+void priorityScheduling(vector<ProcessPrio>& processes);
 
-// In kết quả ra màn hình
-void printResults(const vector<Process>& processes);
+// In kết quả 
+void printResults(const vector<ProcessPrio>& processes);
 
 #endif
