@@ -14,7 +14,7 @@ int main() {
     }
 
     priorityScheduling(processes);
-    printResults(processes);
+    //printResults(processes);
 
     //B1: Đọc file CSV
     vector<ProcessSJF> p = readProcessesFromCSV_SJF("input.csv");
@@ -27,7 +27,7 @@ int main() {
 
     //B2: Chạy thuật toán SJF
     sjfScheduling(p);
-
+/*
     cout << "Result:\n";
     for (auto &x : p) {
         cout << x.name << "\t"
@@ -38,6 +38,6 @@ int main() {
              << "Waiting=" << x.waitingTimeSjf << "\t"
              << "Turnaround=" << x.turnaroundTimeSjf << endl;
     }
-
+*/
     return 0;
 }
