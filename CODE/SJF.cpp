@@ -26,8 +26,8 @@ vector<ProcessSJF> readProcessesFromCSV_SJF(const string& filename) {
 
         ProcessSJF p;
         p.name = name;
-        p.arrivalTime = stoi(arrivalStr);
-        p.burstTime = stoi(burstStr);
+        p.arrivalTimeSjf = stoi(arrivalStr);
+        p.burstTimeSjf = stoi(burstStr);
 
         processes.push_back(p);
     }
@@ -47,11 +47,11 @@ void sjfScheduling(vector<ProcessSJF>& processes) {
 
         // Tìm process có burst nhỏ nhất trong ready queue
         for (int i = 0; i < n; i++) {
-            if (!processes[i].completed && processes[i].arrivalTime <= currentTime) {
+            if (!processes[i].completed && processes[i].arrivalTimeSjf <= currentTime) {
                 if (selected == -1 ||
-                    processes[i].burstTime < processes[selected].burstTime ||
-                    (processes[i].burstTime == processes[selected].burstTime &&
-                     processes[i].arrivalTime < processes[selected].arrivalTime)) {
+                    processes[i].burstTimeSjf < processes[selected].burstTimeSjf ||
+                    (processes[i].burstTimeSjf == processes[selected].burstTimeSjf &&
+                     processes[i].arrivalTimeSjf < processes[selected].arrivalTimeSjf)) {
                     selected = i;
                 }
             }
@@ -64,16 +64,16 @@ void sjfScheduling(vector<ProcessSJF>& processes) {
         }
 
         // Thực thi process
-        processes[selected].startTime = currentTime;
-        processes[selected].finishTime = processes[selected].startTime + processes[selected].burstTime;
+        processes[selected].startTimeSjf = currentTime;
+        processes[selected].finishTimeSjf = processes[selected].startTimeSjf + processes[selected].burstTimeSjf;
 
-        processes[selected].turnaroundTime =
-            processes[selected].finishTime - processes[selected].arrivalTime;
+        processes[selected].turnaroundTimeSjf =
+            processes[selected].finishTimeSjf - processes[selected].arrivalTimeSjf;
 
-        processes[selected].waitingTime =
-            processes[selected].turnaroundTime - processes[selected].burstTime;
+        processes[selected].waitingTimeSjf =
+            processes[selected].turnaroundTimeSjf - processes[selected].burstTimeSjf;
 
-        currentTime = processes[selected].finishTime;
+        currentTime = processes[selected].finishTimeSjf;
         processes[selected].completed = true;
         completedCount++;
     }
@@ -81,7 +81,7 @@ void sjfScheduling(vector<ProcessSJF>& processes) {
 
 // In kết quả
 void printResults_SJF(const vector<ProcessSJF>& processes) {
-    float totalWaiting = 0, totalTurnaround = 0;
+    float totalWaitingSjf = 0, totalTurnaroundSjf = 0;
     int n = processes.size();
 
     cout << "\n===== SJF Scheduling =====\n";
@@ -95,18 +95,18 @@ void printResults_SJF(const vector<ProcessSJF>& processes) {
 
     for (const auto& p : processes) {
         cout << left << setw(10) << p.name
-             << setw(12) << p.arrivalTime
-             << setw(10) << p.burstTime
-             << setw(10) << p.startTime
-             << setw(10) << p.finishTime
-             << setw(12) << p.waitingTime
-             << setw(15) << p.turnaroundTime << endl;
+             << setw(12) << p.arrivalTimeSjf
+             << setw(10) << p.burstTimeSjf
+             << setw(10) << p.startTimeSjf
+             << setw(10) << p.finishTimeSjf
+             << setw(12) << p.waitingTimeSjf
+             << setw(15) << p.turnaroundTimeSjf << endl;
 
-        totalWaiting += p.waitingTime;
-        totalTurnaround += p.turnaroundTime;
+        totalWaitingSjf += p.waitingTimeSjf;
+        totalTurnaroundSjf += p.turnaroundTimeSjf;
     }
 
     cout << fixed << setprecision(2);
-    cout << "\nAverage Waiting Time: " << totalWaiting / n << endl;
-    cout << "Average Turnaround Time: " << totalTurnaround / n << endl;
+    cout << "\nAverage Waiting Time: " << totalWaitingSjf / n << endl;
+    cout << "Average Turnaround Time: " << totalTurnaroundSjf / n << endl;
 }

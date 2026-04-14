@@ -8,13 +8,13 @@ using namespace std;
 
 struct ProcessSJF {
     string name;
-    int arrivalTime;
-    int burstTime;
+    int arrivalTimeSjf;
+    int burstTimeSjf;
 
-    int startTime;
-    int finishTime;
-    int waitingTime;
-    int turnaroundTime;
+    int startTimeSjf;
+    int finishTimeSjf;
+    int waitingTimeSjf;
+    int turnaroundTimeSjf;
 
     bool completed = false;
 };
