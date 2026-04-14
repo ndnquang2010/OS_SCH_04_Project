@@ -38,7 +38,7 @@ namespace CPUSchedulingAlgorithm
         {
         }
 
-        // ================= LOAD CSV =================
+        //  LOAD CSV 
         private void btnLoad_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
