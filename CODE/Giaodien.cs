@@ -15,7 +15,7 @@ namespace CPUSchedulingAlgorithm
             InitializeComponent();
         }
 
-        // ✅ FIX LỖI FORM LOAD
+    // lỗi file 
         private void Form1_Load(object sender, EventArgs e)
         {
             dataGridView1.BackgroundColor = Color.White;
@@ -33,7 +33,7 @@ namespace CPUSchedulingAlgorithm
             dataGridView1.RowHeadersVisible = false;
         }
 
-        // ✅ FIX LỖI DATAGRID CLICK
+        // sửa lỗi  DATAGRID CLICK
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
         }
@@ -75,7 +75,7 @@ namespace CPUSchedulingAlgorithm
             }
         }
 
-        // ================= FCFS =================
+        // FCFS 
         private void btnFCFS_Click(object sender, EventArgs e)
         {
             var list = processes.OrderBy(p => p.Arrival).ToList();
@@ -96,7 +96,7 @@ namespace CPUSchedulingAlgorithm
             ShowData(list);
         }
 
-        // ================= SJF =================
+        //  SJF 
         private void btnSJF_Click(object sender, EventArgs e)
         {
             var temp = processes.OrderBy(p => p.Arrival).ToList();
@@ -128,7 +128,7 @@ namespace CPUSchedulingAlgorithm
             ShowData(result);
         }
 
-        // ================= PRIORITY =================
+        //  PRIORITY 
         private void btnPriority_Click(object sender, EventArgs e)
         {
             var list = processes.Select(p => new Process
@@ -184,7 +184,7 @@ namespace CPUSchedulingAlgorithm
             ShowData(result);
         }
 
-        // ================= HIỂN THỊ =================
+        // HIỂN THỊ 
         private void ShowData(List<Process> list)
         {
             dataGridView1.Rows.Clear();
