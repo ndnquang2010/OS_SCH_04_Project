@@ -84,7 +84,7 @@ void printResults_SJF(const vector<ProcessSJF>& processes) {
     float totalWaiting = 0, totalTurnaround = 0;
     int n = processes.size();
 
-    cout << "\n===== SJF Scheduling (Non-Preemptive) =====\n";
+    cout << "\n===== SJF Scheduling =====\n";
     cout << left << setw(10) << "Process"
          << setw(12) << "Arrival"
          << setw(10) << "Burst"
