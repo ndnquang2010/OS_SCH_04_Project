@@ -15,6 +15,6 @@ Group: OS Group 1
 This repository stores source code, documents and development progress for the Operating System course project.
 
 ## Structure
-- src: source code
-- docs: report and documentation
-- progress: weekly work progress
+- CODE: source code
+- DOCS: report and documentation
+- PPTX: presentation
