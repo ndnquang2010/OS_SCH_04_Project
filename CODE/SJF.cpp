@@ -1,112 +1,86 @@
-#include "sjf.h"
-#include <fstream>
-#include <sstream>
+#include "SJF.h"
+#include <iostream>
 #include <iomanip>
+#include <climits>
+#include <algorithm>
 
-// Đọc file CSV
-vector<ProcessSJF> readProcessesFromCSV_SJF(const string& filename) {
-    vector<ProcessSJF> processes;
-    ifstream file(filename);
-
-    if (!file.is_open()) {
-        cout << "Cannot open file: " << filename << endl;
-        return processes;
-    }
-
-    string line;
-    getline(file, line); // bỏ header
-
-    while (getline(file, line)) {
-        stringstream ss(line);
-        string name, arrivalStr, burstStr;
-
-        getline(ss, name, ',');
-        getline(ss, arrivalStr, ',');
-        getline(ss, burstStr, ',');
-
-        ProcessSJF p;
-        p.name = name;
-        p.arrivalTimeSjf = stoi(arrivalStr);
-        p.burstTimeSjf = stoi(burstStr);
-
-        processes.push_back(p);
-    }
-
-    file.close();
-    return processes;
-}
-
-// SJF
-void sjfScheduling(vector<ProcessSJF>& processes) {
+void sjfScheduling(std::vector<Process>& processes) {
     int n = processes.size();
+    if (n == 0) return;
+
     int currentTime = 0;
     int completedCount = 0;
+
+    // Reset trạng thái (tránh lỗi nếu chạy lại)
+    for (auto &p : processes) {
+        p.completed = false;
+    }
 
     while (completedCount < n) {
         int selected = -1;
 
-        // Tìm process có burst nhỏ nhất trong ready queue
+        // Tìm process có burstTime nhỏ nhất
         for (int i = 0; i < n; i++) {
-            if (!processes[i].completed && processes[i].arrivalTimeSjf <= currentTime) {
+            if (!processes[i].completed && processes[i].arrivalTime <= currentTime) {
                 if (selected == -1 ||
-                    processes[i].burstTimeSjf < processes[selected].burstTimeSjf ||
-                    (processes[i].burstTimeSjf == processes[selected].burstTimeSjf &&
-                     processes[i].arrivalTimeSjf < processes[selected].arrivalTimeSjf)) {
+                    processes[i].burstTime < processes[selected].burstTime ||
+                    (processes[i].burstTime == processes[selected].burstTime &&
+                     processes[i].arrivalTime < processes[selected].arrivalTime) ||
+                    (processes[i].burstTime == processes[selected].burstTime &&
+                     processes[i].arrivalTime == processes[selected].arrivalTime &&
+                     processes[i].id < processes[selected].id)) {
                     selected = i;
                 }
             }
         }
 
-        // Nếu chưa có process nào đến → CPU idle
+        // Nếu chưa có process nào đến → nhảy tới process gần nhất
         if (selected == -1) {
-            currentTime++;
+            int nextArrival = INT_MAX;
+            for (int i = 0; i < n; i++) {
+                if (!processes[i].completed) {
+                    nextArrival = std::min(nextArrival, processes[i].arrivalTime);
+                }
+            }
+            currentTime = nextArrival;
             continue;
         }
 
         // Thực thi process
-        processes[selected].startTimeSjf = currentTime;
-        processes[selected].finishTimeSjf = processes[selected].startTimeSjf + processes[selected].burstTimeSjf;
+        processes[selected].startTime = currentTime;
+        processes[selected].finishTime =
+            processes[selected].startTime + processes[selected].burstTime;
 
-        processes[selected].turnaroundTimeSjf =
-            processes[selected].finishTimeSjf - processes[selected].arrivalTimeSjf;
+        processes[selected].turnaroundTime =
+            processes[selected].finishTime - processes[selected].arrivalTime;
 
-        processes[selected].waitingTimeSjf =
-            processes[selected].turnaroundTimeSjf - processes[selected].burstTimeSjf;
+        processes[selected].waitingTime =
+            processes[selected].turnaroundTime - processes[selected].burstTime;
 
-        currentTime = processes[selected].finishTimeSjf;
+        currentTime = processes[selected].finishTime;
         processes[selected].completed = true;
         completedCount++;
     }
 }
 
-// In kết quả
-void printResults_SJF(const vector<ProcessSJF>& processes) {
-    float totalWaitingSjf = 0, totalTurnaroundSjf = 0;
-    int n = processes.size();
-
-    cout << "\n===== SJF Scheduling =====\n";
-    cout << left << setw(10) << "Process"
-         << setw(12) << "Arrival"
-         << setw(10) << "Burst"
-         << setw(10) << "Start"
-         << setw(10) << "Finish"
-         << setw(12) << "Waiting"
-         << setw(15) << "Turnaround" << endl;
-
+void printSJFResults(const std::vector<Process>& processes) {
+    std::cout << "ID\tArrival\tBurst\tStart\tFinish\tWaiting\tTurnaround\n";
     for (const auto& p : processes) {
-        cout << left << setw(10) << p.name
-             << setw(12) << p.arrivalTimeSjf
-             << setw(10) << p.burstTimeSjf
-             << setw(10) << p.startTimeSjf
-             << setw(10) << p.finishTimeSjf
-             << setw(12) << p.waitingTimeSjf
-             << setw(15) << p.turnaroundTimeSjf << endl;
-
-        totalWaitingSjf += p.waitingTimeSjf;
-        totalTurnaroundSjf += p.turnaroundTimeSjf;
+        std::cout << p.id << "\t" << p.arrivalTime << "\t" << p.burstTime
+                  << "\t" << p.startTime << "\t" << p.finishTime
+                  << "\t" << p.waitingTime << "\t" << p.turnaroundTime << "\n";
     }
+}
 
-    cout << fixed << setprecision(2);
-    cout << "\nAverage Waiting Time: " << totalWaitingSjf / n << endl;
-    cout << "Average Turnaround Time: " << totalTurnaroundSjf / n << endl;
+void printGanttSJF(std::vector<Process> p) {
+    // Sắp xếp theo startTime để in Gantt
+    std::sort(p.begin(), p.end(), [](const Process& a, const Process& b) {
+        return a.startTime < b.startTime;
+    });
+
+    std::cout << "Gantt Chart (SJF):\n";
+    for (const auto& proc : p) {
+        std::cout << "[" << proc.id << ": " << proc.startTime << " - " << proc.finishTime << "] ";
+    }
+    std::cout << "\n";
 }
