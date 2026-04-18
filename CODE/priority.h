@@ -1,30 +1,32 @@
 #ifndef PRIORITY_H
 #define PRIORITY_H
 
-#include <iostream>
 #include <vector>
 #include <string>
-using namespace std;
 
 struct ProcessPrio {
-    string name;
+    std::string id;
+
     int arrivalTime;
     int burstTime;
-    int priority;
-    int startTime;
-    int finishTime;
-    int waitingTime;
-    int turnaroundTime;
+    int priority; // smaller value = higher priority
+
+    int startTime = 0;
+    int completionTime = 0;
+    int waitingTime = 0;
+    int turnaroundTime = 0;
+
     bool completed = false;
 };
 
 // Đọc file CSV
-vector<ProcessPrio> readProcessesFromCSV(const string& filename);
+std::vector<ProcessPrio> readProcessesFromCSV(const std::string& filename);
 
 // Priority Non-Preemptive
-void priorityScheduling(vector<ProcessPrio>& processes);
+void priorityScheduling(std::vector<ProcessPrio>& processes);
 
-// In kết quả 
-void printResults(const vector<ProcessPrio>& processes);
+// In kết quả
+void printPriorityResults(const std::vector<ProcessPrio>& processes);
 
+void printGanttPriority(const std::vector<ProcessPrio>& processes);
 #endif
