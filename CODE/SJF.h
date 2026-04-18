@@ -1,31 +1,24 @@
 #ifndef SJF_H
 #define SJF_H
 
-#include <iostream>
 #include <vector>
 #include <string>
-using namespace std;
 
-struct ProcessSJF {
-    string name;
-    int arrivalTimeSjf;
-    int burstTimeSjf;
+struct Process {
+    std::string id;
+    int arrivalTime;
+    int burstTime;
 
-    int startTimeSjf;
-    int finishTimeSjf;
-    int waitingTimeSjf;
-    int turnaroundTimeSjf;
+    int startTime = 0;
+    int finishTime = 0;
+    int waitingTime = 0;
+    int turnaroundTime = 0;
 
     bool completed = false;
 };
 
-// Đọc file CSV
-vector<ProcessSJF> readProcessesFromCSV_SJF(const string& filename);
-
-// SJF Non-Preemptive
-void sjfScheduling(vector<ProcessSJF>& processes);
-
-// In kết quả
-void printResults_SJF(const vector<ProcessSJF>& processes);
+void sjfScheduling(std::vector<Process>& processes);
+void printSJFResults(const std::vector<Process>& processes);
+void printGanttSJF(std::vector<Process> p);
 
 #endif
