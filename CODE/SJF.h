@@ -3,22 +3,29 @@
 
 #include <vector>
 #include <string>
+using namespace std;
 
-struct Process {
-    std::string id;
-    int arrivalTime;
-    int burstTime;
+struct ProcessSJF {
+    string nameSjf;
+    int arrivalTimeSjf;
+    int burstTimeSjf;
 
-    int startTime = 0;
-    int finishTime = 0;
-    int waitingTime = 0;
-    int turnaroundTime = 0;
+    int startTimeSjf;
+    int finishTimeSjf;
+    int waitingTimeSjf;
+    int turnaroundTimeSjf;
+    int originalIndexSjf;
 
     bool completed = false;
 };
 
-void sjfScheduling(std::vector<Process>& processes);
-void printSJFResults(const std::vector<Process>& processes);
-void printGanttSJF(std::vector<Process> p);
+// Đọc file CSV
+vector<ProcessSJF> readProcessesFromCSV_SJF(const string& filename);
+
+// SJF Non-Preemptive
+void sjfScheduling(vector<ProcessSJF>& processes);
+
+// In kết quả
+void printResults_SJF(const vector<ProcessSJF>& processes);
 
 #endif
