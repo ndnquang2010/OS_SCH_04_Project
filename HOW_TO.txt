@@ -1,0 +1,93 @@
+CPU SCHEDULING PROJECT - HOW TO RUN (GUI VERSION)
+================================================
+
+1. GIỚI THIỆU
+-------------
+Project cài đặt các thuật toán lập lịch CPU (SJF, Priority) với giao diện GUI sử dụng Qt.
+
+Chương trình đọc dữ liệu từ file CSV và hiển thị kết quả trực quan.
+
+---
+
+2. YÊU CẦU HỆ THỐNG
+------------------
+- Cài đặt Qt Creator (bao gồm Qt framework)
+- Khuyến nghị: Qt 5 hoặc Qt 6 (Desktop)
+
+---
+
+3. CÀI ĐẶT QT CREATOR
+---------------------
+Bước 1: Tải Qt tại:
+https://www.qt.io/download
+
+Bước 2: Khi cài đặt, chọn:
+- Qt (Desktop)
+- MinGW (Windows) hoặc compiler tương ứng
+
+---
+
+4. MỞ PROJECT
+-------------
+Bước 1: Mở Qt Creator
+
+Bước 2: Chọn:
+File → Open File or Project
+
+Bước 3: Chọn file:
+CPU_Scheduler.pro
+
+---
+
+5. CONFIGURE PROJECT
+--------------------
+- Chọn Kit:
+  Desktop Qt (MinGW hoặc MSVC)
+
+- Nhấn "Configure Project"
+
+---
+
+6. CHẠY CHƯƠNG TRÌNH
+--------------------
+- Nhấn nút Run (Ctrl + R)
+
+---
+
+7. FILE INPUT
+-------------
+Đảm bảo file input.csv nằm cùng thư mục project
+
+---
+
+8. OUTPUT
+---------
+Giao diện sẽ hiển thị:
+- Danh sách tiến trình
+- Kết quả tính toán (ST, CT, WT, TAT)
+- Gantt Chart
+
+---
+
+9. LỖI THƯỜNG GẶP
+----------------
+
+- Không mở được project:
+  → Kiểm tra CPU Scheduler.pro có tồn tại
+
+- Không run được:
+  → Chưa chọn Kit (Desktop Qt)
+
+- Không đọc được dữ liệu:
+  → Kiểm tra input.csv đúng thư mục
+
+---
+
+10. GHI CHÚ
+-----------
+- Project được thiết kế chạy hoàn toàn bằng GUI
+- Không cần sử dụng terminal/console
+
+---
+
+END
