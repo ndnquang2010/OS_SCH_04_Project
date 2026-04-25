@@ -19,14 +19,14 @@ vector<ProcessSJF> readProcessesFromCSV_SJF(const string& filename) {
 
     while (getline(file, line)) {
         stringstream ss(line);
-        string name, arrivalStr, burstStr;
+        string process, arrivalStr, burstStr;
 
-        getline(ss, name, ',');
+        getline(ss, process, ',');
         getline(ss, arrivalStr, ',');
         getline(ss, burstStr, ',');
 
         ProcessSJF p;
-        p.nameSjf = name;
+        p.nameSjf = process;
         p.arrivalTimeSjf = stoi(arrivalStr);
         p.burstTimeSjf = stoi(burstStr);
 
