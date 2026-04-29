@@ -24,20 +24,12 @@ Dự án hỗ trợ mô phỏng và phân tích:
 ## ⚙️ Các thuật toán được cài đặt
 Dự án bao gồm các thuật toán sau:
 
-### 1. FCFS (First Come First Serve)
-Tiến trình đến trước sẽ được xử lý trước.
 
-### 2. SJF (Shortest Job First)
+### 1. SJF (Shortest Job First)
 Tiến trình có thời gian xử lý ngắn nhất sẽ được ưu tiên.
 
-### 3. Priority Scheduling
+### 2. Priority Scheduling
 Lập lịch theo độ ưu tiên của tiến trình.
-
-### 4. Round Robin (RR)
-Mỗi tiến trình được cấp một khoảng thời gian CPU cố định theo vòng lặp.
-
-### 5. Multi-Level Queue (MLQ)
-Các tiến trình được chia thành nhiều hàng đợi theo mức ưu tiên.
 
 ---
 
